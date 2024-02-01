@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from ..leads.models import Lead
+from leads.models import Lead
 
 
 User = get_user_model()

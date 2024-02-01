@@ -11,7 +11,5 @@ class Lead(models.Model):
         regex=r"^(\+7)(\d{10})$",
         message="Номер телефона должен быть введен в формате: '+79999999999'",
     )
-    phone_number = models.CharField(
-        validators=[phone_regex], max_length=12, blank=True
-    )
+    phone_number = models.CharField(validators=[phone_regex], max_length=12)
     date_of_creation = models.DateTimeField(auto_now_add=True)

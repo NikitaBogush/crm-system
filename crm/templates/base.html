@@ -15,10 +15,12 @@
 </head>
 
 <body>
-    {% include 'includes/header.html' %}
+  {% comment %}
+  {% include 'includes/header.html' %}
+  {% endcomment %}
   <main>
     {% block content %}
     {% endblock %}
   </main>
-    {% include 'includes/footer.html' %}
+  {% include 'includes/footer.html' %}
 </body>

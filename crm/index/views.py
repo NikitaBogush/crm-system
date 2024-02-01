@@ -1,19 +1,11 @@
 from django.shortcuts import render
-
-# Create your views here.
+from leads.models import Lead
 
 
 def index(request):
-    # Адрес шаблона сохраним в переменную, это не обязательно, но удобно
-    template = "ice_cream/index.html"
-    # Строку, которую надо вывести на страницу, тоже сохраним в переменную
-    title = "Анфиса для друзей"
-    # Словарь с данными принято называть context
+    template = "index/index.html"
+    leads = Lead.objects.order_by("-date_of_creation")[:10]
     context = {
-        # В словарь можно передать переменную
-        "title": title,
-        # А можно сразу записать значение в словарь. Но обычно так не делают
-        "text": "Главная страница",
+        "leads": leads,
     }
-    # Третьим параметром передаём словарь context
     return render(request, template, context)
