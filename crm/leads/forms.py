@@ -7,3 +7,7 @@ class LeadForm(forms.ModelForm):
     class Meta:
         model = Lead
         fields = ("name", "phone_number")
+        labels = {
+            "name": "Имя",
+            "phone_number": "Телефон",
+        }

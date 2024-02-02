@@ -13,3 +13,6 @@ class Lead(models.Model):
     )
     phone_number = models.CharField(validators=[phone_regex], max_length=12)
     date_of_creation = models.DateTimeField(auto_now_add=True)
+
+    def get_absolute_url(self):
+        return f"/leads/{self.pk}/"
