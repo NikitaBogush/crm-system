@@ -1,3 +1,37 @@
-12345
-
-{{ lead.name }}
+{% extends "base.html" %}
+{% block title %}
+  {{ lead.name }}
+{% endblock %}
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-11 p-5">
+      <div class="card">
+        <div class="card-header">
+          Информация о лиде
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th class="col-2" scope="row">Имя:</th>
+                <td>{{ lead.name }}</td>
+              </tr>
+              <tr>
+                <th class="col-2" scope="row">Телефон:</th>
+                <td>{{ lead.phone_number }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col text-center">
+            <button type="submit" class="btn btn-primary">
+              Редактировать
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Добавить задачу
+            </button>
+          </div>
+        </div> <!-- card body -->
+      </div> <!-- card -->
+    </div> <!-- col -->
+  </div> <!-- row -->
+{% endblock %}
