@@ -11,8 +11,18 @@ class Lead(models.Model):
         regex=r"^(\+7)(\d{10})$",
         message="Номер телефона должен быть введен в формате: '+79999999999'",
     )
-    phone_number = models.CharField(validators=[phone_regex], max_length=12)
+    phone_number = models.CharField(
+        validators=[phone_regex], max_length=12, unique=True
+    )
     date_of_creation = models.DateTimeField(auto_now_add=True)
 
     def get_absolute_url(self):
         return f"/leads/{self.pk}/"
+
+
+class Task(models.Model):
+    lead = models.ForeignKey(
+        Lead, on_delete=models.CASCADE, related_name="tasks"
+    )
+    comment = models.TextField()
+    task_date = models.DateField()

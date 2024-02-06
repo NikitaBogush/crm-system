@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Создание лида{% endblock %}
+{% block title %}Создание задачи{% endblock %}
 {% block content %}
   <div class="row justify-content-center">
     <div class="col-md-8 p-5">
       <div class="card">
         <div class="card-header">
-          Новый лид
+          Новая задача для лида {{ task.lead.name }}
         </div>
         <div class="card-body">
         {% load user_filters %}
@@ -25,7 +25,7 @@
             {% endfor %}
           {% endif %}
 
-            <form method="post" action="{% url 'leads:create_lead' %}">
+            <form method="post" action="{% url 'leads:task_create' lead_id=form.lead.pk %}">
               {% csrf_token %}
               {% for field in form %}
               <div class="form-group row my-3 p-3">

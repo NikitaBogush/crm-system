@@ -4,7 +4,7 @@
 {% endblock %}
 {% block content %}
   <div class="row justify-content-center">
-    <div class="col-md-11 p-5">
+    <div class="col-md-11 p-4">
       <div class="card">
         <div class="card-header">
           Информация о лиде
@@ -30,6 +30,42 @@
               Добавить задачу
             </button>
           </div>
+        </div> <!-- card body -->
+      </div> <!-- card -->
+    </div> <!-- col -->
+  </div> <!-- row -->
+
+  <div class="row justify-content-center">
+    <div class="col-md-11 p-4">
+      <div class="card">
+        <div class="card-header">
+          Задачи
+        </div>
+        <div class="card-body">
+          <a class="btn btn-primary"
+           href="{% url 'leads:task_create' lead.pk %}"
+           role="button">
+           Добавить задачу
+          </a>
+          <table class="table table-bordered">
+            <tbody>
+              {% for task in tasks %}
+                <tr>
+                  <th class="col-2" scope="row">Дата задачи:</th>
+                  <td>{{ task.task_date }}</td>
+                </tr>
+                <tr>
+                  <th class="col-2" scope="row">Комментарий:</th>
+                  <td>{{ task.comment }}</td>
+                </tr>
+                <div class="col text-center">
+                  <button type="submit" class="btn btn-primary">
+                    Редактировать
+                  </button>
+                </div>
+              {% endfor %}
+            </tbody>
+          </table>
         </div> <!-- card body -->
       </div> <!-- card -->
     </div> <!-- col -->

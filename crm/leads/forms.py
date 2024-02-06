@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Lead
+from .models import Lead, Task
 
 
 class LeadForm(forms.ModelForm):
@@ -10,4 +10,14 @@ class LeadForm(forms.ModelForm):
         labels = {
             "name": "Имя",
             "phone_number": "Телефон",
+        }
+
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ("comment", "task_date")
+        labels = {
+            "comment": "Комментарий",
+            "task_date": "Дата задачи",
         }
