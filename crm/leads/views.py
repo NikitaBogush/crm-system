@@ -33,8 +33,11 @@ class LeadDetailView(DetailView):
 
 
 class TaskCreateView(CreateView):
-    model = Task
     form_class = TaskForm
     template_name = "leads/task_create.html"
-    # подставлять по умолчанию лида и направлять потом
-    # на страницу задачи
+
+    def form_valid(self, form):
+        task = form.save(commit=False)
+        task.lead = Lead.objects.get(pk=self.kwargs["lead_id"])
+        task.save()
+        return redirect("leads:lead_detail", task.lead.pk)

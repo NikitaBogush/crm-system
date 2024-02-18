@@ -25,7 +25,7 @@
             {% endfor %}
           {% endif %}
 
-            <form method="post" action="{% url 'leads:task_create' lead_id=form.lead.pk %}">
+            <form method="post" action="{% url 'leads:task_create' lead_id=request.resolver_match.kwargs.lead_id %}">
               {% csrf_token %}
               {% for field in form %}
               <div class="form-group row my-3 p-3">

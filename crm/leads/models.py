@@ -24,5 +24,6 @@ class Task(models.Model):
     lead = models.ForeignKey(
         Lead, on_delete=models.CASCADE, related_name="tasks"
     )
+    name = models.CharField(max_length=200)
     comment = models.TextField()
     task_date = models.DateField()

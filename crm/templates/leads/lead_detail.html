@@ -42,30 +42,42 @@
           Задачи
         </div>
         <div class="card-body">
-          <a class="btn btn-primary"
-           href="{% url 'leads:task_create' lead.pk %}"
-           role="button">
-           Добавить задачу
-          </a>
-          <table class="table table-bordered">
-            <tbody>
-              {% for task in tasks %}
-                <tr>
-                  <th class="col-2" scope="row">Дата задачи:</th>
-                  <td>{{ task.task_date }}</td>
-                </tr>
-                <tr>
-                  <th class="col-2" scope="row">Комментарий:</th>
-                  <td>{{ task.comment }}</td>
-                </tr>
-                <div class="col text-center">
-                  <button type="submit" class="btn btn-primary">
-                    Редактировать
-                  </button>
-                </div>
-              {% endfor %}
-            </tbody>
-          </table>
+          <div class="col p-2">
+            <a class="btn btn-primary"
+              href="{% url 'leads:task_create' lead.pk %}"
+              role="button">
+              Добавить задачу
+            </a>
+          </div>
+          {% for task in tasks %}
+            <div class="col p-3">
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <th class="col-2" scope="row">Дата задачи:</th>
+                    <td>{{ task.task_date }}</td>
+                  </tr>
+                  <tr>
+                    <th class="col-2" scope="row">Задача:</th>
+                    <td>{{ task.name }}</td>
+                  </tr>
+                  <tr>
+                    <th class="col-2" scope="row">Комментарий:</th>
+                    <td>{{ task.comment }}</td>
+                  </tr>
+                  <tr>
+                    <th colspan="2" scope="row">
+                      <div class="col">
+                        <button type="submit" class="btn btn-primary">
+                          Редактировать
+                        </button>
+                      </div>
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          {% endfor %}
         </div> <!-- card body -->
       </div> <!-- card -->
     </div> <!-- col -->
