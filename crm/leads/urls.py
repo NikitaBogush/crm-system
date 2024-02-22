@@ -5,7 +5,12 @@ app_name = "leads"
 
 urlpatterns = [
     path(
-        "leads/<lead_id>/tasks/create/",
+        "tasks/<int:pk>/edit/",
+        views.TaskEditView.as_view(),
+        name="task_edit",
+    ),
+    path(
+        "leads/<lead_id>/tasks-create/",
         views.TaskCreateView.as_view(),
         name="task_create",
     ),

@@ -1,11 +1,21 @@
 {% extends "base.html" %}
-{% block title %}Создание задачи{% endblock %}
+{% block title %}
+  {% if is_edit %}
+    Редактирование задачи
+  {% else %}
+    Создание задачи
+  {% endif %}
+{% endblock %}
 {% block content %}
   <div class="row justify-content-center">
     <div class="col-md-8 p-5">
       <div class="card">
         <div class="card-header">
-          Новая задача для лида {{ task.lead.name }}
+          {% if is_edit %}
+            Редактирование задачи для лида: {{ lead.name }}
+          {% else %}
+            Новая задача для лида: {{ lead.name }}
+          {% endif %}
         </div>
         <div class="card-body">
         {% load user_filters %}
@@ -25,7 +35,13 @@
             {% endfor %}
           {% endif %}
 
-            <form method="post" action="{% url 'leads:task_create' lead_id=request.resolver_match.kwargs.lead_id %}">
+            <form method="post"
+              {% if is_edit %}
+                action="{% url 'leads:task_edit' task.pk %}"
+              {% else %}
+                action="{% url 'leads:task_create' lead_id=request.resolver_match.kwargs.lead_id %}"
+              {% endif %}
+            >  
               {% csrf_token %}
               {% for field in form %}
               <div class="form-group row my-3 p-3">
@@ -45,8 +61,17 @@
               {% endfor %}
               <div class="col text-center">
                 <button type="submit" class="btn btn-primary">
-                  Создать
+                  {% if is_edit %}
+                    Сохранить изменения
+                  {% else %}
+                    Создать задачу
+                  {% endif %}
                 </button>
+                <a class="btn btn-primary" 
+                  href="{% url 'leads:lead_detail' lead.pk %}"
+                  role="button">
+                    Отмена
+                </a>
               </div>
             </form>
           </div> <!-- card body -->

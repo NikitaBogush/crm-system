@@ -68,9 +68,11 @@
                   <tr>
                     <th colspan="2" scope="row">
                       <div class="col">
-                        <button type="submit" class="btn btn-primary">
+                        <a class="btn btn-primary"
+                          href="{% url 'leads:task_edit' task.pk %}"
+                          role="button">
                           Редактировать
-                        </button>
+                        </a>
                       </div>
                     </th>
                   </tr>

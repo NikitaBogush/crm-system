@@ -3,10 +3,6 @@ from django import forms
 from .models import Lead, Task
 
 
-class DateInput(forms.DateInput):
-    input_type = "date"
-
-
 class LeadForm(forms.ModelForm):
     class Meta:
         model = Lead
@@ -27,5 +23,10 @@ class TaskForm(forms.ModelForm):
             "task_date": "Дата задачи",
         }
         widgets = {
-            "task_date": DateInput(),
+            "task_date": forms.DateInput(
+                format=("%Y-%m-%d"),
+                attrs={
+                    "type": "date",
+                },
+            ),
         }
