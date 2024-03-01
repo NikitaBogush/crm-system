@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block title %}
   {% if is_edit %}
-    Редактирование лида
+    Редактирование сделки
   {% else %}
-    Создание лида
+    Создание новой сделки
   {% endif %}
 {% endblock %}
 {% block content %}
@@ -12,9 +12,9 @@
       <div class="card">
         <div class="card-header">
           {% if is_edit %}
-            Лид
+            Редактирование сделки для лида: {{ lead.name }}
           {% else %}
-            Новый лид
+            Создание сделки для лида: {{ lead.name }}
           {% endif %}
         </div>
         <div class="card-body">
@@ -34,13 +34,14 @@
               </div>
             {% endfor %}
           {% endif %}
+
             <form method="post"
               {% if is_edit %}
-                action="{% url 'leads:lead_edit' lead.pk %}"
+                action="{% url 'leads:deal_edit' deal.pk %}"
               {% else %}
-                action="{% url 'leads:lead_create' %}"
+                action="{% url 'leads:deal_create' lead_id=request.resolver_match.kwargs.lead_id %}"
               {% endif %}
-            >
+            >  
               {% csrf_token %}
               {% for field in form %}
               <div class="form-group row my-3 p-3">
@@ -63,17 +64,13 @@
                   {% if is_edit %}
                     Сохранить изменения
                   {% else %}
-                    Создать
+                    Создать сделку
                   {% endif %}
                 </button>
                 <a class="btn btn-primary" 
-                  {% if is_edit %}
-                    href="{% url 'leads:lead_detail' lead.pk %}"
-                  {% else %}
-                    href="{% url 'leads:index' %}"
-                  {% endif %}
+                  href="{% url 'leads:lead_detail' lead.pk %}"
                   role="button">
-                  Отмена
+                    Отмена
                 </a>
               </div>
             </form>

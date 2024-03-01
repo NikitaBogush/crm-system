@@ -67,6 +67,12 @@
                     Создать задачу
                   {% endif %}
                 </button>
+                <button type="submit" class="btn btn-primary" name='complete_create_submit'>
+                  Завершить и создать новую
+                </button>
+                <button type="submit" class="btn btn-primary" name='complete_submit'>
+                  Завершить
+                </button>
                 <a class="btn btn-primary" 
                   href="{% url 'leads:lead_detail' lead.pk %}"
                   role="button">
