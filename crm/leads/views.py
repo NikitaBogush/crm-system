@@ -1,5 +1,7 @@
-from django.shortcuts import redirect, render
-from django.views.generic import DetailView, CreateView, UpdateView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect, render, get_object_or_404
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.urls import reverse_lazy
 from .forms import LeadForm, TaskForm, DealForm
 from .models import Lead, Task, Deal
@@ -7,6 +9,7 @@ from .models import Lead, Task, Deal
 from datetime import datetime
 
 
+@login_required
 def index(request):
     # доработать функцию
     template = "leads/index.html"
@@ -17,7 +20,7 @@ def index(request):
     return render(request, template, context)
 
 
-class LeadCreateView(CreateView):
+class LeadCreateView(LoginRequiredMixin, CreateView):
     form_class = LeadForm
     template_name = "leads/lead_create.html"
 
@@ -26,7 +29,7 @@ class LeadCreateView(CreateView):
         return redirect(lead)
 
 
-class LeadEditView(UpdateView):
+class LeadEditView(LoginRequiredMixin, UpdateView):
     form_class = LeadForm
     model = Lead
     template_name = "leads/lead_create.html"
@@ -42,7 +45,7 @@ class LeadEditView(UpdateView):
         return redirect(lead)
 
 
-class LeadDetailView(DetailView):
+class LeadDetailView(LoginRequiredMixin, DetailView):
     model = Lead
 
     def get_context_data(self, **kwargs):
@@ -70,7 +73,7 @@ class LeadDetailView(DetailView):
         return context
 
 
-class TaskCreateView(CreateView):
+class TaskCreateView(LoginRequiredMixin, CreateView):
     form_class = TaskForm
     template_name = "leads/task_create.html"
 
@@ -99,7 +102,7 @@ class TaskCreateView(CreateView):
             return redirect("leads:lead_detail", task.lead.pk)
 
 
-class TaskEditView(UpdateView):
+class TaskEditView(LoginRequiredMixin, UpdateView):
     form_class = TaskForm
     model = Task
     template_name = "leads/task_create.html"
@@ -126,7 +129,7 @@ class TaskEditView(UpdateView):
             return redirect("leads:lead_detail", task.lead.pk)
 
 
-class DealCreateView(CreateView):
+class DealCreateView(LoginRequiredMixin, CreateView):
     form_class = DealForm
     template_name = "leads/deal_create.html"
 
@@ -144,7 +147,7 @@ class DealCreateView(CreateView):
         return redirect("leads:lead_detail", deal.lead.pk)
 
 
-class DealEditView(UpdateView):  # доработать html-шаблон
+class DealEditView(LoginRequiredMixin, UpdateView):  # доработать html-шаблон
     form_class = DealForm
     model = Deal
     template_name = "leads/deal_create.html"
@@ -158,3 +161,34 @@ class DealEditView(UpdateView):  # доработать html-шаблон
     def form_valid(self, form):
         deal = form.save()
         return redirect("leads:lead_detail", deal.lead.pk)
+
+
+class TasksView(LoginRequiredMixin, ListView):
+    model = Task
+    template_name = "leads/tasks.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["overdue_tasks"] = (
+            Task.objects.filter(active=True)
+            .filter(task_date__lt=datetime.today())
+            .order_by("task_date")
+        )
+        context["scheduled_tasks"] = (
+            Task.objects.filter(active=True)
+            .filter(task_date=datetime.today())
+            .order_by("task_date")
+        )
+        return context
+
+
+class LeadsView(LoginRequiredMixin, ListView):
+    model = Lead
+    template_name = "leads/leads.html"
+
+
+@login_required
+def search(request):
+    query = request.GET.get("q")
+    lead = get_object_or_404(Lead, phone_number__exact=query)
+    return redirect("leads:lead_detail", lead.pk)

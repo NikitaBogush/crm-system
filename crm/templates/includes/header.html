@@ -1,11 +1,9 @@
 <header>
   <nav class="navbar navbar-light" style="background-color: lightskyblue">
     <div class="container">
-      <a class="navbar-brand" href="{% url 'posts:index' %}">
-        <span style="color:red">Ya</span>tube
+      <a class="navbar-brand" href="{% url 'leads:index' %}">
+        CRM-система
       </a>
-      {# Добавлено в спринте #}
-
       {% comment %}
       Меню - список пунктов со стандартными классами Bootsrap.
       Класс nav-pills нужен для выделения активных пунктов
@@ -13,42 +11,60 @@
       {% with request.resolver_match.view_name as view_name %}
       <ul class="nav nav-pills">
         <li class="nav-item">
-          <a class="nav-link {% if view_name  == 'about:author' %}active{% endif %}" href="{% url 'about:author' %}">Об
-            авторе</a>
+          <a class="nav-link {% if view_name  == 'leads:index' %}active{% endif %}" href="{% url 'leads:index' %}">
+            Главная
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if view_name  == 'about:tech' %}active{% endif %}"
-            href="{% url 'about:tech' %}">Технологии</a>
-        </li>
-        {% if request.user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link {% if view_name  == 'posts:post_create' %}active{% endif %}"
-            href="{% url 'posts:post_create' %}">Новая запись</a>
+          <a class="nav-link {% if view_name  == 'leads:tasks' %}active{% endif %}"
+            href="{% url 'leads:tasks' %}">Задачи</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link link-light {% if view_name  == 'password_change' %}active{% endif %}"
-            href="{% url 'password_change' %}">Изменить пароль</a>
+          <a class="nav-link {% if view_name  == 'leads:leads' %}active{% endif %}"
+            href="{% url 'leads:leads' %}">Лиды</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link link-light {% if view_name  == 'users:logout' %}active{% endif %}"
-            href="{% url 'users:logout' %}">Выйти</a>
+          <a class="nav-link {% if view_name  == 'leads:lead_create' %}active{% endif %}"
+            href="{% url 'leads:lead_create' %}">Создать лида</a>
         </li>
+
+
+
+        <li class="nav-item">
+          <form method="post" action="{% url 'users:logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Выйти</button>
+          </form>
+        </li>
+
+
+
+        {% comment %}
+        <li class="nav-item">
+          <a class="nav-link link-light {% if view_name  == 'logout' %}active{% endif %}"
+            href="{% url 'logout' %}">Выйти</a>
+        </li>
+        {% endcomment %}
+
         <li>
           Пользователь: {{ user.username }}
         <li>
-          {% else %}
-        <li class="nav-item">
-          <a class="nav-link link-light {% if view_name  == 'users:login' %}active{% endif %}"
-            href="{% url 'users:login' %}">Войти</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link link-light {% if view_name  == 'users:signup' %}active{% endif %}"
-            href="{% url 'users:signup' %}">Регистрация</a>
-        </li>
-        {% endif %}
       </ul>
       {% endwith %}
-      {# Конец добавленого в спринте #}
     </div>
   </nav>
+
+
+  <form action="{% url 'leads:search' %}" class="navbar-form navbar-left" method="get">
+    <div class="input-group">
+        <input id="search" name="q" type="text" class="form-control" placeholder="Поиск">
+        <span class="input-group-btn">
+            <button type="submit" class="btn btn-default"></button>
+        </span>
+    </div>
+</form>
+
+
+
+
 </header>

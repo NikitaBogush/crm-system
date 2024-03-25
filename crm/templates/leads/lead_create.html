@@ -67,11 +67,7 @@
                   {% endif %}
                 </button>
                 <a class="btn btn-primary" 
-                  {% if is_edit %}
-                    href="{% url 'leads:lead_detail' lead.pk %}"
-                  {% else %}
-                    href="{% url 'leads:index' %}"
-                  {% endif %}
+                  href="{{request.META.HTTP_REFERER}}"
                   role="button">
                   Отмена
                 </a>

@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}
+  Задачи на сегодня
+{% endblock %}
+{% block content %}
+    <div class="row justify-content-center">
+    <div class="col-md-11 p-4">
+      <div class="card">
+        <div class="card-header">
+          Задачи
+        </div>
+        <div class="card-body">
+
+          {% if overdue_tasks %}
+          <h2 class="text-center">Просроченные</h2>
+          {% for task in overdue_tasks %}
+            <div class="col p-3">
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <th class="col-2" scope="row">Дата задачи:</th>
+                    <td>{{ task.task_date }}</td>
+                  </tr>
+                  <tr>
+                    <th class="col-2" scope="row">Лид:</th>
+                    <td>
+                      <a target="_blank" href="{% url 'leads:lead_detail' task.lead.pk %}">
+                        {{ task.lead.name }}
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="col-2" scope="row">Задача:</th>
+                    <td>{{ task.name }}</td>
+                  </tr>
+                  <tr>
+                    <th class="col-2" scope="row">Комментарий:</th>
+                    <td>{{ task.comment }}</td>
+                  </tr>
+                  <tr>
+                    <th colspan="2" scope="row">
+                      <div class="col">
+                        <a class="btn btn-primary"
+                          href="{% url 'leads:task_edit' task.pk %}"
+                          role="button">
+                          Редактировать
+                        </a>
+                      </div>
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          {% endfor %}
+          {% endif %}
+
+          {% if scheduled_tasks %}
+          <h2 class="text-center">Запланированные на сегодня</h2>
+          {% for task in scheduled_tasks %}
+            <div class="col p-3">
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <th class="col-2" scope="row">Дата задачи:</th>
+                    <td>{{ task.task_date }}</td>
+                  </tr>
+                  <tr>
+                    <th class="col-2" scope="row">Лид:</th>
+                    <td>
+                      <a target="_blank" href="{% url 'leads:lead_detail' task.lead.pk %}">
+                        {{ task.lead.name }}
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="col-2" scope="row">Задача:</th>
+                    <td>{{ task.name }}</td>
+                  </tr>
+                  <tr>
+                    <th class="col-2" scope="row">Комментарий:</th>
+                    <td>{{ task.comment }}</td>
+                  </tr>
+                  <tr>
+                    <th colspan="2" scope="row">
+                      <div class="col">
+                        <a class="btn btn-primary"
+                          href="{% url 'leads:task_edit' task.pk %}"
+                          role="button">
+                          Редактировать
+                        </a>
+                      </div>
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          {% endfor %}
+          {% endif %}
+
+        </div> <!-- card body -->
+      </div> <!-- card -->
+    </div> <!-- col -->
+  </div> <!-- row -->
+
+{% endblock %}

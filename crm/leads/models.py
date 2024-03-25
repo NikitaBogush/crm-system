@@ -12,6 +12,10 @@ LEAD_STATUS = (
 
 
 class Lead(models.Model):
+
+    class Meta:
+        ordering = ["-pk"]
+
     name = models.CharField(max_length=100)
     phone_regex = RegexValidator(
         regex=r"^(\+7)(\d{10})$",

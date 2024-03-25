@@ -31,5 +31,8 @@ urlpatterns = [
         "leads/<int:pk>/", views.LeadDetailView.as_view(), name="lead_detail"
     ),
     path("leads/create/", views.LeadCreateView.as_view(), name="lead_create"),
+    path("tasks/", views.TasksView.as_view(), name="tasks"),
+    path("leads/", views.LeadsView.as_view(), name="leads"),
+    path("search/", views.search, name="search"),
     path("", views.index, name="index"),
 ]
