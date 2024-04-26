@@ -1,16 +1,25 @@
+import datetime
+
 from django import forms
 
-from .models import Lead, Task, Deal
+from .models import Lead, Task, Deal, LEAD_SOURCE
 
 
 class LeadForm(forms.ModelForm):
     class Meta:
         model = Lead
-        fields = ("name", "phone_number", "status")
+        fields = ("name", "phone_number", "status", "source", "comment")
         labels = {
             "name": "Имя",
             "phone_number": "Телефон",
             "status": "Статус",
+            "source": "Источник",
+            "comment": "Комментарий",
+        }
+        error_messages = {
+            "phone_number": {
+                "unique": "Лид с таким номером телефона уже существует.",
+            },
         }
 
 
@@ -26,9 +35,7 @@ class TaskForm(forms.ModelForm):
         widgets = {
             "task_date": forms.DateInput(
                 format=("%Y-%m-%d"),
-                attrs={
-                    "type": "date",
-                },
+                attrs={"type": "date"},
             ),
         }
 
@@ -41,3 +48,29 @@ class DealForm(forms.ModelForm):
             "name": "Наименование сделки",
             "total": "Сумма сделки",
         }
+
+
+class SalesFunnelForm(forms.Form):
+    start_date = forms.DateField(
+        label="С:",
+        widget=forms.DateInput(format="%Y-%m-%d", attrs={"type": "date"}),
+    )
+    end_date = forms.DateField(
+        label="До:",
+        widget=forms.DateInput(format="%Y-%m-%d", attrs={"type": "date"}),
+    )
+    source = forms.ChoiceField(
+        label="Источник:",
+        choices=LEAD_SOURCE,
+        required=False,
+    )
+
+    # def clean_end_date(self):
+    #     data = self.cleaned_data["end_date"]
+    #     if self.cleaned_data["end_date"] < self.cleaned_data["start_date"]:
+    #         raise forms.ValidationError(
+    #             "Дата окончания не может быть раньше даты начала"
+    #         )
+    #     # Метод-валидатор обязательно должен вернуть очищенные данные,
+    #     # даже если не изменил их
+    #     return data

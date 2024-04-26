@@ -1,25 +1,57 @@
 {% extends 'base.html' %}
 {% block title %}Главная страница{% endblock %}
 {% block content %}
-<!-- класс py-5 создает отступы сверху и снизу блока -->
-<div class="container py-5">
-  <h1>Последние лиды</h1>
-  <article>
-    {% for lead in leads %}
-    <ul>
-      <li>
-        Имя: {{ lead.name }}
-      </li>
-      <li>
-        Телефон: {{ lead.phone_number }}
-      </li>
-      <li>
-        Дата создания: {{ lead.date_of_creation|date:"d E Y" }}
-      </li>
-    </ul>
-    {% if not forloop.last %}
-    <hr>{% endif %}
-    {% endfor %}
-  </article>
-</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-11 p-4">
+    <div class="card">
+      <div class="card-header">
+        Задачи
+      </div>
+      <div class="card-body">
+        {% if tasks_count %}
+        <h3 class="text-center">Задач на сегодня: <b>{{ tasks_count }}</b></h3>
+        {% else %}
+        <h3 class="text-center">Задач на сегодня нет</h3>
+        {% endif %}
+        <div class="col text-center p-2">
+          <a class="btn btn-primary"
+            href="{% url 'leads:tasks' %}"
+            role="button">
+            Перейти в задачи
+          </a>
+        </div>
+      </div> <!-- card body -->
+    </div> <!-- card -->
+  </div> <!-- col -->
+</div> <!-- row -->
+
+<div class="row justify-content-center">
+  <div class="col-md-11 p-4">
+    <div class="card">
+      <div class="card-header">
+        Статистика
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th class="col-4" scope="row">Лидов за последние 7 дней:</th>
+              <td>{{ leads_count }}</td>
+            </tr>
+            <tr>
+              <th class="col-4" scope="row">Число сделок за последние 7 дней:</th>
+              <td>{{ deals_count }}</td>
+            </tr>
+            <tr>
+              <th class="col-4" scope="row">На сумму (₽):</th>
+              <td>{{ deals_sum }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div> <!-- card body -->
+    </div> <!-- card -->
+  </div> <!-- col -->
+</div> <!-- row -->
+
 {% endblock %}

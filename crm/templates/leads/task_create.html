@@ -67,12 +67,14 @@
                     Создать задачу
                   {% endif %}
                 </button>
+                {% if task.active or not is_edit %}
                 <button type="submit" class="btn btn-primary" name='complete_create_submit'>
                   Завершить и создать новую
                 </button>
                 <button type="submit" class="btn btn-primary" name='complete_submit'>
                   Завершить
                 </button>
+                {% endif %}
                 <a class="btn btn-primary" 
                   href="{{request.META.HTTP_REFERER}}"
                   role="button">

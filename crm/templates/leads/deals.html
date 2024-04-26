@@ -1,39 +1,39 @@
 {% extends "base.html" %}
 {% block title %}
-  Лиды
+  Сделки
 {% endblock %}
 {% block content %}
     <div class="row justify-content-center">
     <div class="col-md-11 p-4">
       <div class="card">
         <div class="card-header">
-          Лиды
+          Сделки
         </div>
         <div class="card-body">
 
-          {% for lead in object_list %}
+          {% for deal in object_list %}
             <div class="col p-3">
               <table class="table table-bordered">
                 <tbody>
                   <tr>
-                    <th class="col-2" scope="row">Имя:</th>
+                    <th class="col-3" scope="row">Лид:</th>
                     <td>
-                      <a href="{% url 'leads:lead_detail' lead.pk %}">
-                        {{ lead.name }}
+                      <a href="{% url 'leads:lead_detail' deal.lead.pk %}">
+                        {{ deal.lead.name }}
                       </a>
                     </td>
                   </tr>
                   <tr>
-                    <th class="col-2" scope="row">Телефон:</th>
-                    <td>{{ lead.phone_number }}</td>
+                    <th class="col-3" scope="row">Наименование сделки:</th>
+                    <td>{{ deal.name }}</td>
                   </tr>
                   <tr>
-                    <th class="col-2" scope="row">Статус:</th>
-                    <td>{{ lead.get_status_display }}</td>
+                    <th class="col-3" scope="row">Дата сделки:</th>
+                    <td>{{ deal.date_of_deal|date:"d E Y" }}</td>
                   </tr>
                   <tr>
-                    <th class="col-2" scope="row">Дата создания:</th>
-                    <td>{{ lead.date_of_creation|date:"d E Y" }}</td>
+                    <th class="col-3" scope="row">Сумма сделки (₽):</th>
+                    <td>{{ deal.total }}</td>
                   </tr>
                 </tbody>
               </table>

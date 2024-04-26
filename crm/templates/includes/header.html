@@ -1,20 +1,19 @@
+{% if request.user.is_authenticated %}
 <header>
   <nav class="navbar navbar-light" style="background-color: lightskyblue">
     <div class="container">
       <a class="navbar-brand" href="{% url 'leads:index' %}">
-        CRM-система
+        CRM
       </a>
+      <form action="{% url 'leads:search' %}" class="navbar-form" method="get">
+        <input id="search" name="q" type="text" class="form-control" placeholder="Поиск">
+      </form>
       {% comment %}
       Меню - список пунктов со стандартными классами Bootsrap.
       Класс nav-pills нужен для выделения активных пунктов
       {% endcomment %}
       {% with request.resolver_match.view_name as view_name %}
       <ul class="nav nav-pills">
-        <li class="nav-item">
-          <a class="nav-link {% if view_name  == 'leads:index' %}active{% endif %}" href="{% url 'leads:index' %}">
-            Главная
-          </a>
-        </li>
         <li class="nav-item">
           <a class="nav-link {% if view_name  == 'leads:tasks' %}active{% endif %}"
             href="{% url 'leads:tasks' %}">Задачи</a>
@@ -24,47 +23,33 @@
             href="{% url 'leads:leads' %}">Лиды</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link {% if view_name  == 'leads:deals' %}active{% endif %}"
+            href="{% url 'leads:deals' %}">Сделки</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if view_name  == 'leads:sales_funnel' %}active{% endif %}"
+            href="{% url 'leads:sales_funnel' %}">Воронка продаж</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link {% if view_name  == 'leads:lead_create' %}active{% endif %}"
             href="{% url 'leads:lead_create' %}">Создать лида</a>
         </li>
-
-
-
-        <li class="nav-item">
-          <form method="post" action="{% url 'users:logout' %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Выйти</button>
-          </form>
-        </li>
-
-
-
-        {% comment %}
-        <li class="nav-item">
-          <a class="nav-link link-light {% if view_name  == 'logout' %}active{% endif %}"
-            href="{% url 'logout' %}">Выйти</a>
-        </li>
-        {% endcomment %}
-
         <li>
-          Пользователь: {{ user.username }}
+          <div class="position-relative top-50 start-50 translate-middle px-1">
+            Пользователь: {{ user.username }}
+          </div>
+        </li>
         <li>
+          <div class="position-relative top-50 start-50 translate-middle">
+            <form method="post" action="{% url 'users:logout' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">Выйти</button>
+            </form>
+          </div>
+        </li>
       </ul>
       {% endwith %}
     </div>
   </nav>
-
-
-  <form action="{% url 'leads:search' %}" class="navbar-form navbar-left" method="get">
-    <div class="input-group">
-        <input id="search" name="q" type="text" class="form-control" placeholder="Поиск">
-        <span class="input-group-btn">
-            <button type="submit" class="btn btn-default"></button>
-        </span>
-    </div>
-</form>
-
-
-
-
 </header>
+{% endif %}

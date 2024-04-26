@@ -24,6 +24,14 @@
                 <th class="col-2" scope="row">Статус:</th>
                 <td>{{ lead.get_status_display }}</td>
               </tr>
+              <tr>
+                <th class="col-2" scope="row">Источник:</th>
+                <td>{{ lead.get_source_display }}</td>
+              </tr>
+              <tr>
+                <th class="col-2" scope="row">Комментарий:</th>
+                <td>{{ lead.comment }}</td>
+              </tr>
             </tbody>
           </table>
           <div class="col text-center">
@@ -134,9 +142,9 @@
 
 
 
-          {% if completed_tasks %}
+          {% if object_list %}
           <h2 class="text-center">Выполненные</h2>
-          {% for task in completed_tasks %}
+          {% for task in object_list %}
             <div class="col p-3">
               <table class="table table-bordered">
                 <tbody>
@@ -167,6 +175,9 @@
               </table>
             </div>
           {% endfor %}
+
+          {% include 'includes/paginator.html' %}
+
           {% endif %}
         </div> <!-- card body -->
       </div> <!-- card -->
@@ -191,13 +202,14 @@
             </a>
           </div>
           {% if deals %}
+          <h2 class="text-center">Сделки</h2>
           {% for deal in deals %}
             <div class="col p-3">
               <table class="table table-bordered">
                 <tbody>
                   <tr>
                     <th class="col-3" scope="row">Дата сделки:</th>
-                    <td>{{ deal.date_of_deal }}</td>
+                    <td>{{ deal.date_of_deal|date:"d E Y" }}</td>
                   </tr>
                   <tr>
                     <th class="col-3" scope="row">Наименование сделки:</th>
