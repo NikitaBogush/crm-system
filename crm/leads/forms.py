@@ -1,5 +1,3 @@
-import datetime
-
 from django import forms
 
 from .models import Lead, Task, Deal, LEAD_SOURCE
@@ -64,13 +62,3 @@ class SalesFunnelForm(forms.Form):
         choices=LEAD_SOURCE,
         required=False,
     )
-
-    # def clean_end_date(self):
-    #     data = self.cleaned_data["end_date"]
-    #     if self.cleaned_data["end_date"] < self.cleaned_data["start_date"]:
-    #         raise forms.ValidationError(
-    #             "Дата окончания не может быть раньше даты начала"
-    #         )
-    #     # Метод-валидатор обязательно должен вернуть очищенные данные,
-    #     # даже если не изменил их
-    #     return data

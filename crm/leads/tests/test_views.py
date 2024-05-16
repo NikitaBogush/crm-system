@@ -1,16 +1,16 @@
+from datetime import datetime
+
+from django import forms
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
-from django import forms
-
-from datetime import datetime
 
 from leads.models import Lead, Task, Deal
 
 User = get_user_model()
 
 
-class LeadURLTests(TestCase):
+class LeadViewTests(TestCase):
     def setUp(self):
         self.lead = Lead.objects.create(
             name="Иван", phone_number="+71234567890", source="Яндекс Директ"
@@ -26,7 +26,7 @@ class LeadURLTests(TestCase):
         self.authorized_client.force_login(self.user)
 
     def test_pages_uses_correct_template(self):
-        """Проверяем соответствие url и вызываемого шаблона"""
+        """Проверяем соответствие url и вызываемого шаблона."""
         url_templates = {
             reverse(
                 "leads:deal_edit", kwargs={"pk": self.deal.pk}
@@ -250,3 +250,78 @@ class LeadURLTests(TestCase):
             with self.subTest(value=value):
                 form_field = response.context.get("form").fields.get(value)
                 self.assertIsInstance(form_field, expected)
+
+
+class PaginatorViewsTests(TestCase):
+    def setUp(self):
+        self.lead = Lead.objects.create(
+            name="Иван", phone_number="+71234567880", source="Яндекс Директ"
+        )
+        self.task = Task.objects.create(
+            lead=self.lead,
+            name="Позвонить",
+            comment="Нужно позвонить",
+            active=False,
+        )
+        self.deal = Deal.objects.create(
+            name="Продажа", total=3500, lead=self.lead
+        )
+        self.user = User.objects.create_user(username="User123")
+        self.authorized_client = Client()
+        self.authorized_client.force_login(self.user)
+        for count in range(10):
+            Lead.objects.create(
+                name="Иван",
+                phone_number=f"+7123456789{count}",
+                source="Яндекс Директ",
+            )
+            Task.objects.create(
+                lead=self.lead,
+                name="Позвонить",
+                comment="Нужно позвонить",
+                active=False,
+            )
+            Deal.objects.create(
+                name="Продажа",
+                total=3500,
+                lead=self.lead,
+            )
+
+    def test_leads_first_page_has_ten_records(self):
+        """Проверяем, что первая страница leads содержит 10 записей."""
+        response = self.authorized_client.get(reverse("leads:leads"))
+        self.assertEqual(len(response.context.get("page_obj").object_list), 10)
+
+    def test_leads_second_page_has_one_records(self):
+        """Проверяем, что вторая страница leads содержит 1 запись."""
+        response = self.authorized_client.get(
+            reverse("leads:leads") + "?page=2"
+        )
+        self.assertEqual(len(response.context.get("page_obj").object_list), 1)
+
+    def test_deals_first_page_has_ten_records(self):
+        """Проверяем, что первая страница deals содержит 10 записей."""
+        response = self.authorized_client.get(reverse("leads:deals"))
+        self.assertEqual(len(response.context.get("page_obj").object_list), 10)
+
+    def test_deals_second_page_has_one_records(self):
+        """Проверяем, что вторая страница deals содержит 1 запись."""
+        response = self.authorized_client.get(
+            reverse("leads:deals") + "?page=2"
+        )
+        self.assertEqual(len(response.context.get("page_obj").object_list), 1)
+
+    def test_lead_detail_first_page_has_five_records(self):
+        """Проверяем, что первая страница lead_detail содержит 5 записей."""
+        response = self.authorized_client.get(
+            reverse("leads:lead_detail", kwargs={"pk": self.lead.pk})
+        )
+        self.assertEqual(len(response.context.get("page_obj").object_list), 5)
+
+    def test_lead_detail_third_page_has_one_records(self):
+        """Проверяем, что третья страница lead_detail содержит 1 запись."""
+        response = self.authorized_client.get(
+            reverse("leads:lead_detail", kwargs={"pk": self.lead.pk})
+            + "?page=3"
+        )
+        self.assertEqual(len(response.context.get("page_obj").object_list), 1)

@@ -23,8 +23,7 @@ class LeadURLTests(TestCase):
         self.authorized_client.force_login(self.user)
 
     def test_status_code_authorized(self):
-        """Проверяем доступность страниц для авторизованного пользователя"""
-
+        """Проверяем доступность страниц для авторизованного пользователя."""
         urls = [
             f"/deals/{self.deal.pk}/edit/",
             f"/tasks/{self.task.pk}/edit/",
@@ -39,15 +38,13 @@ class LeadURLTests(TestCase):
             "/leads/",
             "/",
         ]
-
         for url in urls:
             with self.subTest(url=url):
                 response = self.authorized_client.get(url)
                 self.assertEqual(response.status_code, 200)
 
     def test_redirect_anonymous(self):
-        """Проверяем редиректы страниц для неавторизованного пользователя"""
-
+        """Проверяем редиректы страниц для неавторизованного пользователя."""
         urls = [
             f"/deals/{self.deal.pk}/edit/",
             f"/tasks/{self.task.pk}/edit/",
@@ -62,15 +59,13 @@ class LeadURLTests(TestCase):
             "/leads/",
             "/",
         ]
-
         for url in urls:
             with self.subTest(url=url):
                 response = self.guest_client.get(url, follow=True)
                 self.assertRedirects(response, f"/auth/login/?next={url}")
 
     def test_templates(self):
-        """Проверяем соответствие url и вызываемого шаблона"""
-
+        """Проверяем соответствие url и вызываемого шаблона."""
         url_templates = {
             f"/deals/{self.deal.pk}/edit/": "leads/deal_create.html",
             f"/tasks/{self.task.pk}/edit/": "leads/task_create.html",
@@ -85,7 +80,6 @@ class LeadURLTests(TestCase):
             "/leads/": "leads/leads.html",
             "/": "leads/index.html",
         }
-
         for url, template in url_templates.items():
             with self.subTest(url=url):
                 response = self.authorized_client.get(url)

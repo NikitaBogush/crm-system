@@ -13,23 +13,21 @@ class LeadURLTests(TestCase):
 
     def test_status_code_login_anonymous(self):
         """Проверяем доступность страницы login для неавторизованного
-        пользователя"""
-
+        пользователя.
+        """
         response = self.guest_client.get("/auth/login/")
         self.assertEqual(response.status_code, 200)
 
     def test_status_code_logout_authorized(self):
         """Проверяем доступность страницы logout для авторизованного
-        пользователя"""
-
+        пользователя.
+        """
         response = self.authorized_client.post("/auth/logout/")
         self.assertEqual(response.status_code, 200)
 
     def test_templates(self):
-        """Проверяем соответствие url и вызываемого шаблона"""
-
+        """Проверяем соответствие url и вызываемого шаблона."""
         response = self.guest_client.get("/auth/login/")
         self.assertTemplateUsed(response, "users/login.html")
-
         response = self.authorized_client.post("/auth/logout/")
         self.assertTemplateUsed(response, "users/logged_out.html")

@@ -3,13 +3,11 @@
   Воронка продаж
 {% endblock %}
 {% block content %}
-
-
 <div class="row justify-content-center">
   <div class="col-md-11 p-4">
     <div class="card">
       <div class="card-header">
-          Фильтры
+        Фильтры
       </div>
       <div class="card-body">
       {% load user_filters %}
@@ -28,7 +26,6 @@
             </div>
           {% endfor %}
         {% endif %}
-
         <form method="get" action="{% url 'leads:sales_funnel' %}">  
           {% csrf_token %}
           {% for field in form %}
@@ -51,61 +48,45 @@
             <button type="submit" class="btn btn-primary">Показать результат</button> 
           </div>
         </form>
-
       </div> <!-- card body -->
     </div> <!-- card -->
   </div> <!-- col -->
 </div> <!-- row -->
-
-
-
-
-
-
-    <div class="row justify-content-center">
-    <div class="col-md-11 p-4">
-      <div class="card">
-        <div class="card-header">
-          Воронка продаж
+<div class="row justify-content-center">
+  <div class="col-md-11 p-4">
+    <div class="card">
+      <div class="card-header">
+        Воронка продаж
+      </div>
+      <div class="card-body">
+        <div class="col p-3">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th class="col-3" scope="row">Новых лидов:</th>
+                <td>{{ new_leads_count }}</td>
+              </tr>
+              <tr>
+                <th class="col-3" scope="row">Сделок:</th>
+                <td>{{ new_leads_with_deals_count }}</td>
+              </tr>
+              <tr>
+                <th class="col-3" scope="row">Конверсия в сделку (%):</th>
+                <td>{{ conversion }}</td>
+              </tr>
+              <tr>
+                <th class="col-3" scope="row">Сумма сделок:</th>
+                <td>{{ sum }}</td>
+              </tr>
+              <tr>
+                <th class="col-3" scope="row">Средний чек:</th>
+                <td>{{ average_bill }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="card-body">
-          
-            <div class="col p-3">
-              <table class="table table-bordered">
-                <tbody>
-
-                  <tr>
-                    <th class="col-3" scope="row">Новых лидов:</th>
-                    <td>{{ new_leads_count }}</td>
-                  </tr>
-                  <tr>
-                    <th class="col-3" scope="row">Сделок:</th>
-                    <td>{{ new_leads_with_deals_count }}</td>
-                  </tr>
-                  <tr>
-                    <th class="col-3" scope="row">Конверсия в сделку (%):</th>
-                    <td>{{ conversion }}</td>
-                  </tr>
-                  <tr>
-                    <th class="col-3" scope="row">Сумма сделок:</th>
-                    <td>{{ sum }}</td>
-                  </tr>
-                  <tr>
-                    <th class="col-3" scope="row">Средний чек:</th>
-                    <td>{{ average_bill }}</td>
-                  </tr>
-
-
-                </tbody>
-              </table>
-            </div>
-
-
-
-
-        </div> <!-- card body -->
-      </div> <!-- card -->
-    </div> <!-- col -->
-  </div> <!-- row -->
-
+      </div> <!-- card body -->
+    </div> <!-- card -->
+  </div> <!-- col -->
+</div> <!-- row -->
 {% endblock %}

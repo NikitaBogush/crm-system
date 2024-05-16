@@ -1,6 +1,6 @@
 from django.test import TestCase
-from leads.models import Lead
-from leads.validators import phone_regex
+
+from leads.models import Lead, phone_regex
 
 
 class LeadModelTest(TestCase):

@@ -10,7 +10,6 @@
           Задачи
         </div>
         <div class="card-body">
-
           {% if overdue_tasks %}
           <h2 class="text-center">Просроченные</h2>
           {% for task in overdue_tasks %}
@@ -53,7 +52,6 @@
             </div>
           {% endfor %}
           {% endif %}
-
           {% if scheduled_tasks %}
           <h2 class="text-center">Запланированные на сегодня</h2>
           {% for task in scheduled_tasks %}
@@ -96,14 +94,11 @@
             </div>
           {% endfor %}
           {% endif %}
-
           {% if not overdue_tasks and not scheduled_tasks %}
           <h2 class="text-center">На сегодня нет задач или уже всё выполнено</h2>
           {% endif %}
-
         </div> <!-- card body -->
       </div> <!-- card -->
     </div> <!-- col -->
   </div> <!-- row -->
-
 {% endblock %}

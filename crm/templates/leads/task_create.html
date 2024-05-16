@@ -34,7 +34,6 @@
               </div>
             {% endfor %}
           {% endif %}
-
             <form method="post"
               {% if is_edit %}
                 action="{% url 'leads:task_edit' task.pk %}"
@@ -67,7 +66,8 @@
                     Создать задачу
                   {% endif %}
                 </button>
-                {% if task.active or not is_edit %}
+                <!-- если задача активна или если редактирование, то только активной задачи -->
+                {% if task.active or not is_edit %} 
                 <button type="submit" class="btn btn-primary" name='complete_create_submit'>
                   Завершить и создать новую
                 </button>

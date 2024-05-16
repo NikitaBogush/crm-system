@@ -37,12 +37,14 @@
           <div class="col text-center">
             <a class="btn btn-primary"
               href="{% url 'leads:lead_edit' lead.pk %}"
-              role="button">
+              role="button"
+            >
               Редактировать
             </a>
             <a class="btn btn-primary"
               href="{% url 'leads:deal_create' lead.pk %}"
-              role="button">
+              role="button"
+            >
               Создать сделку
             </a>
           </div>
@@ -50,7 +52,6 @@
       </div> <!-- card -->
     </div> <!-- col -->
   </div> <!-- row -->
-
   <div class="row justify-content-center">
     <div class="col-md-11 p-4">
       <div class="card">
@@ -61,12 +62,11 @@
           <div class="col p-2">
             <a class="btn btn-primary"
               href="{% url 'leads:task_create' lead.pk %}"
-              role="button">
+              role="button"
+            >
               Добавить задачу
             </a>
           </div>
-          
-          
           {% if overdue_tasks %}
           <h2 class="text-center">Просроченные</h2>
           {% for task in overdue_tasks %}
@@ -90,7 +90,8 @@
                       <div class="col">
                         <a class="btn btn-primary"
                           href="{% url 'leads:task_edit' task.pk %}"
-                          role="button">
+                          role="button"
+                        >
                           Редактировать
                         </a>
                       </div>
@@ -101,10 +102,6 @@
             </div>
           {% endfor %}
           {% endif %}
-
-
-
-
           {% if scheduled_tasks %}
           <h2 class="text-center">Запланированные</h2>
           {% for task in scheduled_tasks %}
@@ -128,7 +125,8 @@
                       <div class="col">
                         <a class="btn btn-primary"
                           href="{% url 'leads:task_edit' task.pk %}"
-                          role="button">
+                          role="button"
+                        >
                           Редактировать
                         </a>
                       </div>
@@ -139,9 +137,6 @@
             </div>
           {% endfor %}
           {% endif %}
-
-
-
           {% if object_list %}
           <h2 class="text-center">Выполненные</h2>
           {% for task in object_list %}
@@ -165,7 +160,8 @@
                       <div class="col">
                         <a class="btn btn-primary"
                           href="{% url 'leads:task_edit' task.pk %}"
-                          role="button">
+                          role="button"
+                        >
                           Редактировать
                         </a>
                       </div>
@@ -175,18 +171,12 @@
               </table>
             </div>
           {% endfor %}
-
           {% include 'includes/paginator.html' %}
-
           {% endif %}
         </div> <!-- card body -->
       </div> <!-- card -->
     </div> <!-- col -->
   </div> <!-- row -->
-
-
-
-
   <div class="row justify-content-center">
     <div class="col-md-11 p-4">
       <div class="card">
@@ -197,7 +187,8 @@
           <div class="col p-2">
             <a class="btn btn-primary"
               href="{% url 'leads:deal_create' lead.pk %}"
-              role="button">
+              role="button"
+            >
               Добавить сделку
             </a>
           </div>
@@ -224,7 +215,8 @@
                       <div class="col">
                         <a class="btn btn-primary"
                           href="{% url 'leads:deal_edit' deal.pk %}"
-                          role="button">
+                          role="button"
+                        >
                           Редактировать
                         </a>
                       </div>

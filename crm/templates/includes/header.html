@@ -8,31 +8,42 @@
       <form action="{% url 'leads:search' %}" class="navbar-form" method="get">
         <input id="search" name="q" type="text" class="form-control" placeholder="Поиск">
       </form>
-      {% comment %}
-      Меню - список пунктов со стандартными классами Bootsrap.
-      Класс nav-pills нужен для выделения активных пунктов
-      {% endcomment %}
       {% with request.resolver_match.view_name as view_name %}
       <ul class="nav nav-pills">
         <li class="nav-item">
           <a class="nav-link {% if view_name  == 'leads:tasks' %}active{% endif %}"
-            href="{% url 'leads:tasks' %}">Задачи</a>
+            href="{% url 'leads:tasks' %}"
+          >
+            Задачи
+          </a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if view_name  == 'leads:leads' %}active{% endif %}"
-            href="{% url 'leads:leads' %}">Лиды</a>
+            href="{% url 'leads:leads' %}"
+          >
+            Лиды
+          </a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if view_name  == 'leads:deals' %}active{% endif %}"
-            href="{% url 'leads:deals' %}">Сделки</a>
+            href="{% url 'leads:deals' %}"
+          >
+            Сделки
+          </a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if view_name  == 'leads:sales_funnel' %}active{% endif %}"
-            href="{% url 'leads:sales_funnel' %}">Воронка продаж</a>
+            href="{% url 'leads:sales_funnel' %}"
+          >
+            Воронка продаж
+          </a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if view_name  == 'leads:lead_create' %}active{% endif %}"
-            href="{% url 'leads:lead_create' %}">Создать лида</a>
+            href="{% url 'leads:lead_create' %}"
+          >
+            Создать лида
+          </a>
         </li>
         <li>
           <div class="position-relative top-50 start-50 translate-middle px-1">

@@ -23,14 +23,12 @@
                 </div>
               {% endfor %}
           {% endif %}
-
           <form method="post"
             {% if action_url %}
               action="{% url action_url %}"
             {% endif %}
           >
           {% csrf_token %}
-
           {% for field in form %}
             <div class="form-group row my-3"
               {% if field.field.required %} 
@@ -59,8 +57,6 @@
             <button type="submit" class="btn btn-primary">
               Войти
             </button>
-            <!-- Тест на внимательность. Без переопределения шаблона этого адреса
-            не существует. Нужно что-то делать, иначе все упадет -->
             <a href="{% url 'password_reset' %}" class="btn btn-link">
               Забыли пароль?
             </a>

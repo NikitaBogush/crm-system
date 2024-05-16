@@ -34,7 +34,6 @@
               </div>
             {% endfor %}
           {% endif %}
-
             <form method="post"
               {% if is_edit %}
                 action="{% url 'leads:deal_edit' deal.pk %}"
@@ -69,7 +68,8 @@
                 </button>
                 <a class="btn btn-primary" 
                   href="{{request.META.HTTP_REFERER}}"
-                  role="button">
+                  role="button"
+                >
                   Отмена
                 </a>
               </div>
@@ -78,4 +78,4 @@
         </div> <!-- card -->
       </div> <!-- col -->
   </div> <!-- row -->
-{% endblock %} 
+{% endblock %}
