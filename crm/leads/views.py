@@ -36,6 +36,9 @@ def index(request):
     deals_sum = Deal.objects.filter(
         date_of_deal__range=(start_date, end_date)
     ).aggregate(Sum("total"))["total__sum"]
+    # Если сделок не было:
+    if deals_sum is None:
+        deals_sum = 0
     template = "leads/index.html"
     context = {
         "tasks_count": tasks_count,
