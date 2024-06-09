@@ -11,7 +11,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
+from datetime import timedelta
+from dotenv import load_dotenv
 from pathlib import Path
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +30,7 @@ SECRET_KEY = (
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "web"]
 
@@ -43,11 +47,16 @@ INSTALLED_APPS = [
     "leads.apps.LeadsConfig",
     "core.apps.CoreConfig",
     "users.apps.UsersConfig",
+    "api.apps.ApiConfig",
+    "rest_framework",
+    "corsheaders",
+    "djoser",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -140,3 +149,21 @@ LOGIN_URL = "users:login"
 LOGIN_REDIRECT_URL = "leads:index"
 
 CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1", "http://localhost"]
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAdminUser",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+}
+
+SIMPLE_JWT = {
+    # Устанавливаем срок жизни токена
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=365),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
+
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_URLS_REGEX = r"^/api/.*$"

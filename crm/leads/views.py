@@ -1,4 +1,4 @@
-from datetime import datetime, date, timedelta
+from datetime import date, timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -16,12 +16,12 @@ def index(request):
     """Главная страница. Отображает число задач на сегодня
     и небольшую статистику.
     """
-    start_date = datetime.today() - timedelta(days=7)
-    end_date = datetime.today()
+    start_date = date.today() - timedelta(days=7)
+    end_date = date.today()
     # Число задач на сегодня (включая просроченные):
     tasks_count = (
         Task.objects.filter(active=True)
-        .filter(task_date__lte=datetime.today())
+        .filter(task_date__lte=date.today())
         .count()
     )
     # Число лидов за последние 7 дней:
@@ -71,11 +71,11 @@ class TasksView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         # Просроченные задачи:
         context["overdue_tasks"] = Task.objects.filter(active=True).filter(
-            task_date__lt=datetime.today()
+            task_date__lt=date.today()
         )
         # Задачи, запланированные на сегодня:
         context["scheduled_tasks"] = Task.objects.filter(active=True).filter(
-            task_date=datetime.today()
+            task_date=date.today()
         )
         return context
 
@@ -197,13 +197,13 @@ class LeadDetailView(LoginRequiredMixin, DetailView, MultipleObjectMixin):
         context["overdue_tasks"] = (
             Task.objects.filter(lead=self.object)
             .filter(active=True)
-            .filter(task_date__lt=datetime.today())
+            .filter(task_date__lt=date.today())
         )
         # Запланированные задачи:
         context["scheduled_tasks"] = (
             Task.objects.filter(lead=self.object)
             .filter(active=True)
-            .filter(task_date__gte=datetime.today())
+            .filter(task_date__gte=date.today())
         )
         # Сделки:
         context["deals"] = Deal.objects.filter(lead=self.object).order_by(

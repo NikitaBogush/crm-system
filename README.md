@@ -1,6 +1,6 @@
 # CRM-система для бизнеса
 
-![Static Badge](https://img.shields.io/badge/python-3.10.12-blue?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/django-5.0.1-blue?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/drf-gray?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/postgresql-14.11-blue?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/nginx-1.26.0-blue?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/docker-gray?style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/python-3.10.12-blue?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/django-5.0.1-blue?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/drf-3.15.1-blue?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/postgresql-14.11-blue?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/nginx-1.26.0-blue?style=for-the-badge) ![Static Badge](https://img.shields.io/badge/docker-gray?style=for-the-badge)
 
 #### Данная crm-система предназначена для:
 * Создания и учета новых лидов (заявок)
@@ -27,7 +27,7 @@
   ```
   cd crm-system
   ```
-* Запускаем docker-compose
+* Запускаем docker compose
   ```
   docker compose up -d
   ```
@@ -45,5 +45,5 @@
   ```
 * Проект доступен по адресу
   ```
-  http://localhost/
+  http://127.0.0.1/
   ```

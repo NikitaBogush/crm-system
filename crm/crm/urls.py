@@ -19,6 +19,11 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
+    # Djoser - базовые, для управления пользователями в Django:
+    path("auth/", include("djoser.urls")),
+    # Djoser - JWT-эндпоинты, для управления JWT-токенами:
+    path("auth/", include("djoser.urls.jwt")),
+    path("api/", include("api.urls", namespace="api")),
     path("auth/", include("users.urls", namespace="users")),
     path("auth/", include("django.contrib.auth.urls")),
     path("admin/", admin.site.urls),
